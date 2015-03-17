@@ -148,6 +148,7 @@ class SipDataTable extends DataTable_DataTable
             ->setGetMethod("getPidUser")
             ->setSortKey("pid_user")
             ->setIsSortable(true)
+            ->setIsVisible(false)            
             ->setIsSearchable(true);                        
 
     $column13 = new DataTable_Column();
@@ -182,7 +183,7 @@ class SipDataTable extends DataTable_DataTable
             ->setGetMethod("getCalIdAleg")
             ->setSortKey("callid_aleg")
             ->setIsSortable(true)
-            ->setIsVisible(false)            
+            ->setIsVisible(true)            
             ->setIsSearchable(false);                        
 
     $column17 = new DataTable_Column();

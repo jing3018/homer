@@ -197,7 +197,7 @@ case $DIST in
    # Is this required?
         #yum -y update
 
-        VERS=$(cat /etc/redhat-release |cut -d' ' -f3 |cut -d'.' -f1)
+   VERS=$(cat /etc/redhat-release | tr ' ' '\n' | grep -e '^[0-9].[0-9]$' | cut -d'.' -f1)
    cat /etc/redhat-release | grep -e "5." -e "5.6" -e "5.7" -q >> /dev/null
    if [ $? == "0" ]; then
    	yum -y remove php-*

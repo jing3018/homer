@@ -226,7 +226,19 @@ class SipResult
   
   public function getCalIdAleg()
   {
-      return $this->callid_aleg;
+	  $search = json_decode($_SESSION['homersearch']);
+	  if(!defined('CFLOW_POPUP')) $popuptype = 1;
+	  else $popuptype = CFLOW_POPUP;
+
+	  $fd = date("Y-m-d", strtotime($search->from_date));
+	  $td = date("Y-m-d", strtotime($search->to_date));   
+	  $url = "cid[]=".$this->callid_aleg;
+	  $url .= "&full=1&from_time=".$search->from_time."&to_time=".$search->to_time."&from_date=".$fd."&to_date=".$td;
+	  $url .= "&popuptype=".$popuptype."&unique=".$search->unique."&location[]=".implode("&location[]=", $search->location);
+	  $search = array("\\",  "\x00", "\n",  "\r",  "'",  '"', "\x1a");
+	  $replace = array("\\\\","\\0","\\n", "\\r", "\'", '\"', "\\Z");
+
+	  return "<a alt='callflow' href=\"javascript:showCallFlow2($popuptype, '".str_replace($search, $replace, $this->callid_aleg)."','cflow.php?".str_replace($search, $replace, $url)."');\">".$this->callid_aleg."</a>";
   }  
 
   public function getVia1()

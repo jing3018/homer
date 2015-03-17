@@ -170,11 +170,16 @@ $cids_aleg = array();
 		               	foreach($location as $value) {
 		               		$db->dbconnect_homer(isset($mynodes[$value]) ? $mynodes[$value] : NULL);
 		               		foreach ($mynodes[$value]->dbtables as $tablename){
-		                        		$query = "SELECT callid FROM ".$tablename
+		                        		$query = "SELECT distinct(callid) as callid FROM ".$tablename
 		                        		."\n WHERE ".$where." callid_aleg='".$cid."'";
-		                        		$cid_aleg = $db->loadResult($query);
-		                        		if (!empty($cid_aleg))
-		                        			break 2;
+		                        		$cid_aleg = $db->loadObjectArray($query);
+										if(!empty($cid_aleg)) {
+											#array_shift($cid_aleg);
+											foreach($cid_aleg as $key=>$row) {
+												array_push($cids_aleg, $row['callid']);
+											}
+											break 2;
+										}
 		               		}
 		               	}                       			
                         break;		
